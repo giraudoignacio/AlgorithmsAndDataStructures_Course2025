@@ -1,5 +1,5 @@
 #include "engine.hpp"
-
+#include <iostream>
 #include <fstream>
 
 void Engine::start()
@@ -25,6 +25,28 @@ void Engine::initEntities()
 {
     std::cout << GREEN << "Inicializando entidades..." << RESET << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+}
+
+void Engine::onNewEvent(const Evento& evento) {
+    m_eventosPendientes.enqueue(evento);
+}
+
+void Engine::processEvents() {
+    m_eventosPendientes.processEvents();
+}
+
+void Engine::checkEvents() {
+    m_eventosPendientes.checkEvents();
+}
+
+void Engine::registerDecision(const std::string& accion) {
+    m_historialDecisiones.push(accion);
+}
+
+void Engine::undoDecision() {
+    if (!m_historialDecisiones.isEmpty()) {
+        m_historialDecisiones.pop();
+    }
 }
 
 void Engine::showBanner()

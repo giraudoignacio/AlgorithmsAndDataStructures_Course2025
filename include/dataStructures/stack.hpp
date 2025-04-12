@@ -65,13 +65,15 @@ public:
      *
      * @throws std::underflow_error si la pila está vacía
      */
-    void pop()
-    {
+    void pop() {
         if (isEmpty())
         {
             throw std::underflow_error("Stack is empty");
         }
-        throw std::underflow_error("Stack is empty");
+        Node* temp = m_top;
+        m_top = m_top->next;
+        delete temp;
+        --m_size;
     }
 
     /**
@@ -80,9 +82,12 @@ public:
      * @return TData& referencia al valor
      * @throws std::underflow_error si la pila está vacía
      */
-    TData& top()
-    {
-        throw std::underflow_error("Stack is empty");
+    TData& top() {
+        if (isEmpty())
+        {
+            throw std::underflow_error("Stack is empty");
+        }
+        return m_top->data;
     }
 
     /**
@@ -91,9 +96,12 @@ public:
      * @return const TData& referencia constante al valor
      * @throws std::underflow_error si la pila está vacía
      */
-    const TData& top() const
-    {
-        throw std::underflow_error("Stack is empty");
+    const TData& top() const {
+        if (isEmpty())
+        {
+            throw std::underflow_error("Stack is empty");
+        }
+        return m_top->data;
     }
 
     /**

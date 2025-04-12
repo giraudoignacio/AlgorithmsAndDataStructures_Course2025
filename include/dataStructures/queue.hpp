@@ -2,6 +2,8 @@
 #define QUEUE_HPP
 
 #include <stdexcept>
+#include "evento.hpp"
+
 
 /**
  * @brief Estructura de datos tipo Cola (FIFO - First In, First Out)
@@ -80,7 +82,13 @@ public:
      */
     void dequeue()
     {
-        throw std::underflow_error("Queue is empty");
+        if (isEmpty()){
+            throw std::underflow_error("Queue is empty");
+        }
+        Node* temp = m_front;
+        m_front = m_front->next;
+        delete temp;
+        --m_size;
     }
 
     /**
@@ -91,7 +99,10 @@ public:
      */
     TData front() const
     {
-        throw std::underflow_error("Queue is empty");
+        if (isEmpty()){
+            throw std::underflow_error("Queue is empty");
+        }
+        return m_front->data;
     }
 
     /**
@@ -113,6 +124,25 @@ public:
     size_t getSize() const
     {
         return m_size;
+    }
+
+    void processEvents() {
+        while (!isEmpty()) {
+            std::cout << "Procesando evento: " << front().getDescripcion() << std::endl;
+            dequeue();
+        }
+    }
+
+    void checkEvents() const {
+        if (isEmpty()) {
+            std::cout << "No hay eventos pendientes." << std::endl;
+            return;
+        }
+        std::cout << "Eventos pendientes:" << std::endl;
+        Node* actual = m_front;
+        while (actual != nullptr) {
+            actual = actual->next;
+        }
     }
 };
 
