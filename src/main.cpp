@@ -3,6 +3,7 @@
 #include <thread>
 
 #include "engine.hpp"
+#include "evento.hpp"
 
 auto constexpr HELP_FILE {"assets/help.txt"}; //< Nombre del archivo de ayuda
 
