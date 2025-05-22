@@ -5,6 +5,9 @@
 #include "randomEventGenerator.hpp"
 #include "refugio.hpp"
 #include "engineData.hpp"
+#include "queue.hpp"
+#include "evento.hpp"
+#include "stack.hpp"
 #include <chrono>
 #include <filesystem>
 #include <iostream>
@@ -81,6 +84,12 @@ public:
      */
     const EngineData::PlayerInfo& playerInfo() const;
 
+    void onNewEvent(const Evento& evento);
+    void processEvents();
+    void checkEvents();
+    void registerDecision(const std::string& accion);
+    void undoDecision();
+
 private:
     /**
      * @brief: Inicializa los recursos del tablero
@@ -126,6 +135,10 @@ private:
     RandomEventGenerator m_randomGenerator; //< Generador de eventos aleatorios
     EngineData::GameConfig m_gameConfig;    //< Configuración del juego
     std::unique_ptr<Refugio> m_shelter;     //< Refugio del jugador
+
+
+    Queue<Evento> m_eventosPendientes;
+    Stack<std::string> m_historialDecisiones;
 
     /**
      * @brief: Operaciones que puede realizar el jugador
