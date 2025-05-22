@@ -17,8 +17,7 @@ private:
         Nodo* izquierda;
         Nodo* derecha;
 
-        Nodo(const std::string& d)
-            : decision(d), izquierda(nullptr), derecha(nullptr) {}
+        Nodo(const std::string& d) : decision(d), izquierda(nullptr), derecha(nullptr) {}
     };
 
 public:
@@ -91,15 +90,18 @@ private:
             if (nodo->izquierda == nullptr && nodo->derecha == nullptr) {
                 delete nodo;
                 nodo = nullptr;
-            } else if (nodo->izquierda == nullptr) {
+            }
+            else if (nodo->izquierda == nullptr) {
                 Nodo* temp = nodo;
                 nodo = nodo->derecha;
                 delete temp;
-            } else if (nodo->derecha == nullptr) {
+            }
+            else if (nodo->derecha == nullptr) {
                 Nodo* temp = nodo;
                 nodo = nodo->izquierda;
                 delete temp;
-            } else {
+            }
+            else {
                 Nodo* reemplazo = nodo->derecha;
                 while (reemplazo->izquierda != nullptr) {
                     reemplazo = reemplazo->izquierda;
@@ -111,7 +113,9 @@ private:
     }
 
     void recorrerPreorden(Nodo* nodo) const {
-        if (nodo == nullptr) return;
+        if (nodo == nullptr) {
+            return;
+        }
         std::cout << nodo->decision << std::endl;
         recorrerPreorden(nodo->izquierda);
         recorrerPreorden(nodo->derecha);
